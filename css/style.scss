@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(45deg, #564b8f 10%, #efe6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    canvas {
+        width: 650px;
+        height: 450px;
+        border: 7px solid #e3e3e3;
+        border-bottom: transparent;
+        background: url('/img/bkg.png');
+        margin: 0 auto;
+        display: block;
+    }
+    #sprite {
+        position: absolute;
+    }
+}
