@@ -16,8 +16,8 @@ let x = canvas.width / 2;
 let y = canvas.height - 15;
 
 // Velocidad de la pelota
-let dx = -3;
-let dy = 1;
+let dx = -4;
+let dy = -3;
 
 /* VARIABLES DE LA PALETA */
 const paddleHeight = 6;
@@ -62,7 +62,7 @@ for (let c = 0; c < brickColumnCount; c++) {
     }
 }
 
-let paddle_sensibility = 4;
+let paddle_sensibility = 6;
 
 function drawBall() {
 
