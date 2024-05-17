@@ -16,8 +16,8 @@ let x = canvas.width / 2;
 let y = canvas.height - 15;
 
 // Velocidad de la pelota
-let dx = -2;
-let dy = -1;
+let dx = -3;
+let dy = 1;
 
 /* VARIABLES DE LA PALETA */
 const paddleHeight = 6;
@@ -62,7 +62,7 @@ for (let c = 0; c < brickColumnCount; c++) {
     }
 }
 
-let paddle_sensibility = 5;
+let paddle_sensibility = 4;
 
 function drawBall() {
 
@@ -115,20 +115,39 @@ function drawBricks() {
 function collisionDetection() {
     for (let c = 0; c < brickColumnCount; c++) {
         for (let r = 0; r < brickRowCount; r++) {
-            const currentBrick = bricks[c][r]
+            const currentBrick = bricks[c][r];
             if (currentBrick.status === brick_status.destroyed)
                 continue;
-            const isBallSameXAsBrick =
-                x > currentBrick.x &&
-                x < currentBrick.x + brickWidth
 
-            const isBallSameYAsBrick =
-                y > currentBrick.y &&
-                y < currentBrick.y + brickHeight
+            // Calcular los bordes de la pelota y el ladrillo
+            const ballRight = x + ballRadius;
+            const ballLeft = x - ballRadius;
+            const ballTop = y - ballRadius;
+            const ballBottom = y + ballRadius;
+            const brickRight = currentBrick.x + brickWidth;
+            const brickLeft = currentBrick.x;
+            const brickTop = currentBrick.y;
+            const brickBottom = currentBrick.y + brickHeight;
 
-            if (isBallSameXAsBrick && isBallSameYAsBrick) {
-                dy = -dy
-                currentBrick.status = brick_status.destroyed
+            // Comprobar si la pelota colisiona con el ladrillo
+            const collidesWithBrick =
+                ballRight > brickLeft &&
+                ballLeft < brickRight &&
+                ballTop < brickBottom &&
+                ballBottom > brickTop;
+
+            if (collidesWithBrick) {
+                // Si la pelota golpea por la parte inferior del ladrillo, cambiar solo dy
+                if (ballBottom >= brickBottom && ballTop < brickBottom) {
+                    dy = -dy;
+                } else {
+                    // Cambiar la dirección de la pelota en ambos ejes
+                    dx = -dx;
+                    dy = -dy;
+                }
+
+                // Marcar el ladrillo como destruido
+                currentBrick.status = brick_status.destroyed;
             }
         }
     }
